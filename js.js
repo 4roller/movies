@@ -40,6 +40,14 @@ var moviesJS = (function() {
                 var locationId = $(this).parent().parent().attr('id').replace('li', '');
 				moviesJS.posterSelect(locationId); 
 			});
+			$('.button').click(function(e){
+				if($(this).attr('id') == 'next') {
+					moviesJS.creepForth(e);
+				} else {
+					moviesJS.creepBack(e);
+				}
+			});
+
             /*
             $('#backdropDrizzle').hover(function(){
                 $('#backdrop').stop(1,1).animate({
@@ -116,12 +124,11 @@ var moviesJS = (function() {
 			});
 		},
 		getMoreStuff: function(spaceid){
-            $('#backdrop').animate({
+            $('#backdrop').animate({ 
                 opacity: 0
             }, function() {
 			    var queryURL = "http://api.themoviedb.org/3/movie/" + spaceid + "?api_key=cfff74e77ce61bec9d33ba1c6d7003b2";
 			    $.get(queryURL, function(data) {
-				    //console.log(data);
                     if(data.tagline != '') {
                         $('#iTagline').html('"' + data.tagline + '"');
                     }
@@ -129,8 +136,9 @@ var moviesJS = (function() {
 				    $('#iPoster img').attr('src', imageUrl);
                     $('#iPoster').css('display','inline-block');
 			         
-				    var backdrop= 'url(https://d3gtl9l2a4fn1j.cloudfront.net/t/p/w780/' + data.backdrop_path + ')';
-				    $('#backdrop').css('background', backdrop );
+				    var backdrop= 'https://d3gtl9l2a4fn1j.cloudfront.net/t/p/original/' + data.backdrop_path ;
+				    $('#backdrop img').attr('src', backdrop);
+
                     $('#backdrop').animate({
                         opacity: 0.3
                     },2000); 
@@ -153,7 +161,7 @@ var moviesJS = (function() {
 		},
 		creepForth: function(e) {
     		e.preventDefault();
-            if(idx >= moviesListSize) {idx = movieListSize -1; }
+            if(idx >= moviesListSize) {idx = moviesListSize ; }
             else {idx += 3;}
     		moviesJS.creepTo(idx);        
   		},
@@ -167,10 +175,9 @@ var moviesJS = (function() {
             //console.log(idx);
 		    sPos = parseInt(sPos);
 		    idx = ((110 * idx ) *-1 ) + (($(document).width()/2) -300 ) ;  
-
 		    $('#scroller').animate({
 		    	left: idx
-		    });
+		    },200);
   		}
 
 

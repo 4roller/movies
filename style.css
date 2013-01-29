@@ -6,15 +6,16 @@
 }
 
 
-html { background: #000; font-size: 100%;}
+html { background: #000; font-size: 100%; padding:0; margin:0;}
 	
-body {color: #fff; background: #000;  position: relative;}
+body {color: #fff; background: #000;  position: relative;padding:0; margin:0;}
 h1 { font-family: "Georgia", Helvetica; color: #40ffff; opacity: 1; font-size: 200%;}
-div#navHolder { border: 0px solid red; position: absolute; width: 99%; height: 200px; background: #000;top: 10px; left: 5px;}  
+div#navHolder { border: 0px solid red; position: relative; width: 99%; height: 200px; top: 10px; left: 5px; z-index:100;}  
 label#title { position: absolute; border: 0px solid purple; bottom: 10px;  display: block; left: 50%; width: 800px; height: 30px; text-align: center; margin-left: -400px;
   font-family: 'Essays 1743',Palatino,'Palatino Linotype','Book Antiqua',Georgia,'Times New Roman',serif; font-size: 200%;
   color: #c0c0cf; opacity:1; ;
 }
+
 
 div#holder { position: absolute; left: 50%; margin-left: -38.4%;; width: 76%; height: 200px; overflow: hidden; border: 0px solid red;}
 ul#scroller { hightlight: none; position: relative; display: block; border: 0px solid #c0c0c0; overflow: hidden; height: 190px; width:5000px; margin:0; padding:0; left:0px; }
@@ -28,7 +29,8 @@ ul#scroller li a img.select { width: 100px; top:5px; border: 0; opacity: 1; bord
 
 
 
-a.button { border: 0px solid orange; position: absolute; display: block; width: 86px; height: 86px; text-indent: -999em; outline: none; top: 80px; display: auto; background: #000;}
+a.button { border: 1px solid #222; position: absolute; display: block; width: 86px; height: 86px; text-indent: -999em; outline: none; top: 25px; display: auto; background: transparent;
+background-image: url(/assets/arrow_spirte.png);}
 
 a#prev { left: 5px; }
 a:hover#prev { }
@@ -36,8 +38,8 @@ a#next {right: 5px;}
 a:hover#next { }
 
 
-#info { border: 0px solid #c0c0c0; text-align: justify; position: absolute; position:relative; margin:-420px auto 0 auto; height: 300px; text-align:center;
-  bottom: 10px; top: 200px; width: 600px; font-family: "Helvetica", "Arial" serif; font-size: 90%; opacity: 0; color: #aaa:; line-height:20px; text-shadow: 1px 1px 1px #888;}
+#info { border: 0px solid #c0c0c0; text-align: justify; position: absolute; position:relative; margin:0px auto 0 auto; height: 300px; text-align:center;
+  bottom: 10px; top: 0px; width: 600px; font-family: "Helvetica", "Arial" serif; font-size: 90%; opacity: 0; color: #aaa:; line-height:20px; text-shadow: 1px 1px 1px #888;}
 #info #iContainer { border: 0px solid red; position: relative; float: left; width:600px; margin: 0 0 0 70px;}  
 #info #iBlock {border: 0px solid red; position:relative; width: 300px; float:left; margin: 0 0 0 40px; text-align:left;}
 #info h2 { font-size: 35px; font-weight: bold; color: #fff; font-family: Gruppo,  serif; display: inline; position:relative;text-shadow: 2px 2px 5px #000;} 
@@ -56,5 +58,5 @@ a:hover#next { }
 
 
 
-#backdrop { top:211px; position:relative; border:0px solid green; width: 780px; opacity: 0.3; margin: 0 auto; height: 438px;  }
-#backdropDrizzle { position: absolute;bottom: 0px;width: 150px;height: 420px;opacity: 0.0;cursor: pointer;right: 0;background: #999;}
+#backdrop { top:0; z-index:1; position:absolute; border:0px solid green; width: 100%; opacity: 0.3; margin: auto auto;  background-repeat:no-repeat; }
+#backdrop img {width: 100%; }

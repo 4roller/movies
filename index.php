@@ -16,16 +16,16 @@
     </div>
     <a class="button" id ="prev" href="#">Previous</a>
     <a class="button" id ="next" href="#">Next</a>
-
   </div>
 
+  <div id="info"></div>
+  
    
   <div id="backdrop">
-    <div id="backdropDrizzle"></div>
+    <img src=""/>
   </div>
   
 
-  <div id="info"></div>
    
    
 
