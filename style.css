@@ -29,12 +29,12 @@ ul#scroller li a img.select { width: 100px; top:5px; border: 0; opacity: 1; bord
 
 
 
-a.button { border: 1px solid #222; position: absolute; display: block; width: 86px; height: 86px; text-indent: -999em; outline: none; top: 25px; display: auto; background: transparent;
-background-image: url(/assets/arrow_spirte.png);}
-
-a#prev { left: 5px; }
+a.button { border: 0px solid #222; position: absolute; display: block; width: 50px; height: 70px; text-indent: -999em; outline: none; top: 35px; display: auto; 
+background: transparent;background-image: url(assets/arrows.png); background-repeat: no-repeat; opacity: 0.5;}
+a.button:hover { opacity:1; }
+a#prev { left: 5px; background-position: 5px 5px;}
 a:hover#prev { }
-a#next {right: 5px;}
+a#next {right: 5px; background-position: -45px 5px;}
 a:hover#next { }
 
 

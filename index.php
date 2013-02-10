@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-<title>AJAX SOAP</title>
+<title>CSS and JSON RPC Demo</title>
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.5.0/build/cssbase/cssbase-min.css">
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>

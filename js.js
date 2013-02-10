@@ -8,6 +8,8 @@ var moviesJS = (function() {
 	var sPos = 0;
   	var idx = 5;
     var moviesListSize;
+    var cache = [];
+    var cache2 = [];
 
 	return {
 		init: function() {
@@ -26,7 +28,7 @@ var moviesJS = (function() {
                 moviesListSize = movieList.length;
 				// Create a block of html from json data
 				for(var i = movieList.length-1; i >= 0; i-- ) {
-					htmlBlock += '<li id="li' + (i - movieList.length + 1) * -1 + '" data-spaceid="' + movieList[i].Spaceid + '"><a href=""><img class="posterImage" alt="Movie Poster ' + movieList[i].Name + '" src="' + movieList[i].Poster + '"/></a>	<label>' + movieList[i].Name  + '</label></li>';
+					htmlBlock += '<li id="li' + (i - movieList.length + 1) * -1 + '" data-spaceid="' + movieList[i].Spaceid + '"><a href=""><img class="posterImage" alt="Movie Poster ' + movieList[i].Name + '" src="' + movieList[i].Poster + '"/></a></li>';
 				}
 
 				// Inject html block to the page
@@ -47,23 +49,6 @@ var moviesJS = (function() {
 					moviesJS.creepBack(e);
 				}
 			});
-
-            /*
-            $('#backdropDrizzle').hover(function(){
-                $('#backdrop').stop(1,1).animate({
-                    opacity:1
-                },200,function() {
-                    $('#info').hide();   
-                });
-            },function(){
-                $('#backdrop').stop(1,1).animate({
-                    opacity: 0.5
-                },200, function() {
-                    $('#info').show();
-                });
-            });
-            */
-
             $(document).keydown(function(e) {
                 if (e.keyCode == 37) {
                     if(idx < 0 ) { idx = 0;}
@@ -76,8 +61,6 @@ var moviesJS = (function() {
                     moviesJS.posterSelect(idx);
                 }
             });
-
-
 		},
 		resetPoster: function() {
 			$('.posterImage').animate({
@@ -85,32 +68,41 @@ var moviesJS = (function() {
 				opacity: 0.6
 			}, 150);
 		},
-		getStuff: function(spaceid) {
+		getPrimaryData: function(spaceid) {
+			var data;
+
+			// check if data is in local cache
+			if( typeof cache[spaceid] == 'undefined') {				
+			    var queryURL = "query.php?i=" + spaceid;
+			    $.get(queryURL, function(data) {
+			    	data =  $.parseJSON(data);
+			    	cache[spaceid] = data;
+			    	moviesJS.displayPrimaryData(data, spaceid);
+			    });
+			} else {
+				moviesJS.displayPrimaryData(cache[spaceid], spaceid);
+			}
+		},
+		displayPrimaryData: function(data, spaceid) {
 			$('#info').animate({
 				opacity: 0
 			}, function(){
-				var jsonData; 
 				var htmlBlock = '';
-				var queryURL = "query.php?i=" + spaceid;
-
-				// Jquery AJAX request for cached (?) movie API data
-				$.get(queryURL, function(data) {
-					jsonData =  $.parseJSON(data)
-	   				htmlBlock += '<span id="iTitle"><h2>' + jsonData.Title + '</h2></span>';
-	   				htmlBlock += '<span id="iYear">' + jsonData.Year + '</span>';
+	   				htmlBlock += '<span id="iTitle"><h2>' + data.Title + '</h2></span>';
+	   				htmlBlock += '<span id="iYear">' + data.Year + '</span>';
                     htmlBlock += '<div id="iTagline"></div>';
-	   				htmlBlock += '<div id="iPlot">' + jsonData.Plot + '</div>';
-	   				actors = jsonData.Actors.replace(/, /g, "&nbsp; &diams; &nbsp;");
+	   				htmlBlock += '<div id="iPlot">' + data.Plot + '</div>';
+	   				actors = data.Actors.replace(/, /g, "&nbsp; &diams; &nbsp;");
 		  			htmlBlock += '<div id="iActors">' + actors + '</div>';
 		  			htmlBlock += '<div id="iContainer">';
 				 	htmlBlock += '  <div id="iPoster"><img src=""></img></div>';    
 	  				htmlBlock += '  <div id="iBlock">';
-                    htmlBlock += '    <div id="iDirector">Director: ' + jsonData.Director + '</div>';
-	  				htmlBlock += '    <div id="iWriter">Writing: ' + jsonData.Writer + '</div>';
-	  				htmlBlock += '    <div id="iReleased">Release Date: ' + jsonData.Released + '</div>';
-	  				htmlBlock += '    <div id="iRuntime">Runtime: ' + jsonData.Runtime + '</div>';
-	  				htmlBlock += '    <div id="iGenre">' + jsonData.Genre + '</div>'
-	  				htmlBlock += '    <div id="iRated" class="' + jsonData.Rated + '"></div>';
+                    htmlBlock += '    <div id="iDirector">Director: ' + data.Director + '</div>';
+	  				htmlBlock += '    <div id="iWriter">Writing: ' + data.Writer + '</div>';
+	  				htmlBlock += '    <div id="iReleased">Release Date: ' + data.Released + '</div>';
+	  				htmlBlock += '    <div id="iRuntime">Runtime: ' + data.Runtime + '</div>';
+	  				htmlBlock += '    <div id="iGenre">' + data.Genre + '</div>'
+	  				htmlBlock += '    <div id="iRated" class="' + data.Rated + '"></div>';
                     htmlBlock += '  </div>';
 					htmlBlock += '  </div>';
 
@@ -119,32 +111,40 @@ var moviesJS = (function() {
 	  					opacity: 1
 	  				},200);
 		
-        		    moviesJS.getMoreStuff(spaceid);
-        		});
+        		    moviesJS.getSecondaryData(spaceid);
 			});
 		},
-		getMoreStuff: function(spaceid){
+		getSecondaryData: function(spaceid){
+			var data;
+			// check if data is in local cache
+			if( typeof cache2[spaceid] == 'undefined') {				
+			    var queryURL = 'query2.php?i=' + spaceid;
+			    $.get(queryURL, function(data) {
+			    	data =  $.parseJSON(data);
+			    	cache2[spaceid] = data;
+			    	moviesJS.displaySecondaryData(data);
+			    });
+			} else {
+				moviesJS.displaySecondaryData(cache2[spaceid]);
+			}
+		},
+		displaySecondaryData: function(data) {
             $('#backdrop').animate({ 
                 opacity: 0
             }, function() {
-			    var queryURL = "http://api.themoviedb.org/3/movie/" + spaceid + "?api_key=cfff74e77ce61bec9d33ba1c6d7003b2";
-			    $.get(queryURL, function(data) {
-                    if(data.tagline != '') {
-                        $('#iTagline').html('"' + data.tagline + '"');
-                    }
-				    var imageUrl= 'https://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/' + data.poster_path;
-				    $('#iPoster img').attr('src', imageUrl);
-                    $('#iPoster').css('display','inline-block');
-			         
-				    var backdrop= 'https://d3gtl9l2a4fn1j.cloudfront.net/t/p/original/' + data.backdrop_path ;
-				    $('#backdrop img').attr('src', backdrop);
-
-                    $('#backdrop').animate({
-                        opacity: 0.3
-                    },2000); 
-                });
+                if(data.tagline != '') {
+                    $('#iTagline').html('"' + data.tagline + '"');
+                }
+			    var imageUrl= 'https://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/' + data.poster_path;
+			    $('#iPoster img').attr('src', imageUrl);
+                $('#iPoster').css('display','inline-block');
+		         
+			    var backdrop= 'https://d3gtl9l2a4fn1j.cloudfront.net/t/p/original/' + data.backdrop_path ;
+			    $('#backdrop img').attr('src', backdrop);
+                $('#backdrop').animate({
+                    opacity: 0.3
+                },2000); 
             });
-
 		},
 		posterSelect: function(id) {
             idx = parseInt(id);
@@ -157,7 +157,7 @@ var moviesJS = (function() {
 			},250);
 			$('#title').hide();
 
-			moviesJS.getStuff($('#li' + id).attr('data-spaceid'));
+			moviesJS.getPrimaryData($('#li' + id).attr('data-spaceid'));
 		},
 		creepForth: function(e) {
     		e.preventDefault();
@@ -179,13 +179,8 @@ var moviesJS = (function() {
 		    	left: idx
 		    },200);
   		}
-
-
-
-
 	}
 })();
-
 
 
 $(document).ready(function(){
