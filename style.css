@@ -6,7 +6,7 @@
 }
 
 
-html { background: #000; font-size: 100%; padding:0; margin:0;}
+html { background: #000; font-size: 100%; padding:0; margin:0; position:relative;}
 	
 body {color: #fff; background: #000;  position: relative;padding:0; margin:0;}
 h1 { font-family: "Georgia", Helvetica; color: #40ffff; opacity: 1; font-size: 200%;}
@@ -18,14 +18,13 @@ label#title { position: absolute; border: 0px solid purple; bottom: 10px;  displ
 
 
 div#holder { position: absolute; left: 50%; margin-left: -38.4%;; width: 76%; height: 200px; overflow: hidden; border: 0px solid red;}
-ul#scroller { hightlight: none; position: relative; display: block; border: 0px solid #c0c0c0; overflow: hidden; height: 190px; width:5000px; margin:0; padding:0; left:0px; }
+ul#scroller { position: relative; display: block; border: 0px solid #c0c0c0; overflow: hidden; height: 190px; width:5000px; margin:0; padding:0; left:0px; }
 
-ul#scroller li { display: block; float: left; list-style: none; border: 0px solid green; width: 110px; height: 160px; text-align: center; }
+ul#scroller li { display: block; float: left; list-style: none; border: 0px solid green; width: 110px; height: 160px; text-align: center; position:relative;}
 ul#scroller li label { display: block; border: 1px solid #000; display:none; width: 80px; overflow: hidden;	}
-ul#scroller li a {outline: 0; }
-ul#scroller li a img { position:relative; border: 0px solid black; width: 60px; top: 25px; opacity: 0.6;}
-ul#scroller li a:hover img { border: 2px solid gold; top: 23px; opacity: 1;}
-ul#scroller li a img.select { width: 100px; top:5px; border: 0; opacity: 1; border: 2px solid #c0c0cf;}
+ul#scroller li img { position:relative; border: 0px solid black; width: 60px; height: 82px; outline:0; top: 25px; opacity: 0.6;}
+ul#scroller li img:hover { border: 2px solid gold; top: 23px; opacity: 1;}
+ul#scroller li img.select { width: 100px; top:5px; border: 0; opacity: 1; border: 2px solid #c0c0cf;}
 
 
 
