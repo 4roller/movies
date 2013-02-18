@@ -153,9 +153,9 @@ var moviesJS = (function() {
 			    //This block takes time if you are on a slow connection.
 			    var backdrop= 'https://d3gtl9l2a4fn1j.cloudfront.net/t/p/original/' + data.backdrop_path ;
 			    $('#backdrop img').attr('src', backdrop);
-                $('#backdrop').stop(1,1).animate({
+                $('#backdrop').stop(1,0).animate({
                     opacity: 0.3
-                },2000); 
+                },5000); 
 			    
             });
 		},
